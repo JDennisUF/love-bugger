@@ -1,0 +1,20 @@
+[camera]
+device = "/dev/v4l/by-id/usb-046d_C270_HD_WEBCAM_11319900-video-index0"
+width = 1280
+height = 720
+fps = 30.0
+fourcc = "MJPG"
+
+[detector]
+history = 300
+variance_threshold = 16.0
+warmup_frames = 30
+min_area = 4
+max_area = 2500
+
+[tracker]
+max_distance_px = 60.0
+max_missed_frames = 10
+
+[output]
+directory = "data/runs"

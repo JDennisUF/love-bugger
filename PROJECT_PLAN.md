@@ -1,8 +1,9 @@
 # Lovebug Interceptor — Project Plan
 
-**Status:** Concept / feasibility research  
+**Status:** Camera prototype implemented; lovebug feasibility testing pending
 **Last updated:** 2026-10-21  
 **Development environment:** Linux desktop, Zed, local Git repository  
+**Implementation progress:** See [first milestone checklist](docs/checklist.md) and [camera experiments](docs/experiments.md).
 **First objective:** Detect, track, and physically intercept **one** flying lovebug in a controlled test area.
 
 ## 1. Vision
@@ -72,9 +73,9 @@ Keep perception, tracking, planning, and drone-control interfaces separate so re
 
 ### Phase 0 — Repository and safety foundation
 
-- [ ] Initialize Python project, virtual environment, formatter/linter, and basic tests.
+- [x] Initialize Python project, virtual environment, formatter/linter, and basic tests.
 - [ ] Create configuration for cameras, calibration, detection thresholds, and safety limits.
-- [ ] Define a no-flight simulation mode as the default.
+- [x] Define a no-flight simulation mode as the default (current application is perception-only).
 - [ ] Define kill-switch behavior, loss-of-tracking behavior, and allowed test boundaries.
 - [ ] Document a contained test area and an observer/operator procedure.
 
@@ -86,8 +87,8 @@ Keep perception, tracking, planning, and drone-control interfaces separate so re
 - [ ] Record approximate target distance, lighting, camera resolution, FPS, and lens field of view.
 - [ ] Test visible diffuse backlighting, 365 nm UV-A, and 850 nm IR **only with compatible cameras and appropriate eye protection**.
 - [ ] Determine whether lovebugs fluoresce or merely reflect under UV; do not assume UV makes them brighter.
-- [ ] Implement simple background subtraction / motion detection.
-- [ ] Overlay bounding boxes and track IDs on recorded footage.
+- [x] Implement simple background subtraction / motion detection.
+- [x] Overlay bounding boxes and track IDs on recorded footage (verified with synthetic footage).
 - [ ] Measure detection rate, false positives, and apparent target size in pixels.
 
 **Exit criterion:** Reliably identify and track individual lovebugs in representative recorded video, with documented results.
@@ -226,15 +227,21 @@ Add raw video recordings and local configuration files to `.gitignore` unless in
 
 **Completed conceptually:** Defined the problem, chose one-drone scope, preferred a stationary camera with Linux-based tracking, discussed an active interception concept, and identified lighting as an early experiment.
 
+**Implemented and verified:** Python 3.11 CLI, TOML configuration, live camera capture,
+video replay, motion candidates, centroid track IDs, raw/annotated recordings, CSV logs,
+and metadata. Automated tests pass. The Logitech C270 recorded 144 readable 1280×720
+frames in a five-second capture at approximately 30 FPS. This was a capture smoke test,
+not a target-detection experiment. See the milestone checklist for remaining operator trials.
+
 **Not yet demonstrated:** Lovebug detection, UV/IR response, 3D tracking, flight control, interception mechanism, and successful contact.
 
 **Next work session:**
 
-1. Put this plan in the repository.
-2. Set up a minimal Python/OpenCV project.
-3. Obtain 2–3 short lovebug video clips (ideally recorded with the intended camera).
-4. Build a script that visualizes moving-object candidates and saves annotated output.
-5. Record baseline detection performance before selecting drone hardware.
+1. Follow the household-target procedure in `docs/experiments.md`.
+2. Inspect annotated recordings and tune candidate-size and tracking limits.
+3. Compare target visibility at two distances and lighting conditions.
+4. Obtain 2–3 short lovebug video clips recorded with the C270.
+5. Measure baseline lovebug detection performance before selecting drone hardware.
 
 ## 11. Open decisions
 
